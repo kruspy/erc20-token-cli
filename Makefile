@@ -14,20 +14,17 @@ RESET  := $(shell tput -Txterm sgr0)
 ## Build:
 build: ## Build your project and put the output binary in out/bin/
 	mkdir -p out/bin
-	GO111MODULE=on $(GOCMD) build -mod vendor -o out/bin/$(BINARY_NAME) ./cmd/tokencli
+	GO111MODULE=on $(GOCMD) build -o out/bin/$(BINARY_NAME) ./cmd/tokencli
 
-install:
-	go install ./cmd/tokencli
-
-vendor: ## Copy of all packages needed to support builds and tests in the vendor directory
-	$(GOCMD) mod vendor
+install: ## Install tokencli locally
+	GO111MODULE=on $(GOCMD) install ./cmd/tokencli
 
 clean: ## Remove all build related files
 	rm -fr out
-	rm -f checkstyle-report.xml
 
 ## Compile:
 compile: ## Compile Solidity files and generate Go bindings
+	npm install
 	solc --optimize --abi ./contracts/$(CONTRACT_NAME).sol -o build --include-path node_modules/ --base-path .
 	solc --optimize --bin ./contracts/$(CONTRACT_NAME).sol -o build --include-path node_modules/ --base-path .
 	abigen --abi=./build/$(CONTRACT_NAME).abi --bin=./build/$(CONTRACT_NAME).bin --pkg=token --out=./contracts/ERC20Token.go
