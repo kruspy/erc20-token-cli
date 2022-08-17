@@ -9,6 +9,7 @@ WHITE  := $(shell tput -Txterm setaf 7)
 CYAN   := $(shell tput -Txterm setaf 6)
 RESET  := $(shell tput -Txterm sgr0)
 
+all: compile install
 .PHONY: build
 
 ## Build:
@@ -21,6 +22,7 @@ install: ## Install tokencli locally
 
 clean: ## Remove all build related files
 	rm -fr out
+	rm $(GOPATH)/bin/tokencli
 
 ## Compile:
 compile: ## Compile Solidity files and generate Go bindings
