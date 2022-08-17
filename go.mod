@@ -4,6 +4,7 @@ go 1.18
 
 require (
 	github.com/ethereum/go-ethereum v1.10.21
+	github.com/holiman/uint256 v1.2.0
 	github.com/urfave/cli/v2 v2.10.2
 )
 

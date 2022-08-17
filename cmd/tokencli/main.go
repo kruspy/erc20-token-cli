@@ -21,7 +21,8 @@ func NewApp(usage string) *cli.App {
 
 func init() {
 	app.Commands = []*cli.Command{
-		// CLI commands will be added here
+		createCommand,
+		infoCommand,
 	}
 }
 

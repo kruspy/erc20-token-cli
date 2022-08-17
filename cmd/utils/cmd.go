@@ -10,6 +10,8 @@ import (
 	"os"
 	"runtime"
 
+	token "github.com/kruspy/erc20-token-cli/contracts"
+
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/ethclient"
@@ -84,4 +86,36 @@ func Auth(client *ethclient.Client, privateKeyAddress string) *bind.TransactOpts
 	auth.GasPrice = gasPrice
 
 	return auth
+}
+
+func TokenName(token *token.Token) string {
+	name, err := token.Name(nil)
+	if err != nil {
+		Fatalf(err.Error())
+	}
+	return name
+}
+
+func TokenSymbol(token *token.Token) string {
+	symbol, err := token.Symbol(nil)
+	if err != nil {
+		Fatalf(err.Error())
+	}
+	return symbol
+}
+
+func TokenDecimals(token *token.Token) uint8 {
+	decimals, err := token.Decimals(nil)
+	if err != nil {
+		Fatalf(err.Error())
+	}
+	return decimals
+}
+
+func TokenTotalSupply(token *token.Token) *big.Int {
+	totalSupply, err := token.TotalSupply(nil)
+	if err != nil {
+		Fatalf(err.Error())
+	}
+	return totalSupply
 }
