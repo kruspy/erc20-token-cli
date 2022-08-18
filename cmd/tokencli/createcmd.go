@@ -53,8 +53,8 @@ func createToken(ctx *cli.Context) error {
 	wholeSupply, err := strconv.ParseInt(ctx.Args().Get(2), 10, 64)
 	if err == nil { // uint256 is used to multiply
 		supply, _ := uint256.FromBig(big.NewInt(int64(wholeSupply)))
-		decimals, _ := uint256.FromBig(big.NewInt(1000000000)) // Decimals are hardcoded in the contract
-		tokenSupply = supply.Mul(supply, decimals).ToBig()
+		decimals, _ := uint256.FromBig(big.NewInt(1000000)) // Decimals are hardcoded in the contract
+		tokenSupply = new(uint256.Int).Mul(supply, decimals).ToBig()
 	} else {
 		utils.Fatalf(err.Error())
 	}

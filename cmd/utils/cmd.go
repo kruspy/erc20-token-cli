@@ -6,6 +6,7 @@ import (
 	"crypto/ecdsa"
 	"fmt"
 	"io"
+	"math"
 	"math/big"
 	"os"
 	"runtime"
@@ -112,10 +113,11 @@ func TokenDecimals(token *token.Token) uint8 {
 	return decimals
 }
 
-func TokenTotalSupply(token *token.Token) *big.Int {
-	totalSupply, err := token.TotalSupply(nil)
+func TokenTotalSupply(token *token.Token) *big.Float {
+	minRepSupply, err := token.TotalSupply(nil)
 	if err != nil {
 		Fatalf(err.Error())
 	}
-	return totalSupply
+	return new(big.Float).Quo(new(big.Float).SetInt(minRepSupply),
+		big.NewFloat(math.Pow10(int(TokenDecimals(token)))))
 }
