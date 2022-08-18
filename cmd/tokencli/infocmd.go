@@ -48,6 +48,6 @@ func tokenInfo(ctx *cli.Context) error {
 
 	fmt.Printf("NAME: %v\nSYMBOL: %v\nDECIMALS: %v\nSUPPLY: %v\n",
 		utils.TokenName(instance), utils.TokenSymbol(instance),
-		utils.TokenDecimals(instance), utils.TokenDecimals(instance))
+		utils.TokenDecimals(instance), utils.TokenTotalSupply(instance))
 	return nil
 }
