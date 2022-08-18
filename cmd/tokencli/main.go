@@ -23,6 +23,7 @@ func init() {
 	app.Commands = []*cli.Command{
 		createCommand,
 		infoCommand,
+		balanceCommand,
 	}
 }
 
