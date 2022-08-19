@@ -46,12 +46,14 @@ to take place.
 
 func tokenBalance(ctx *cli.Context) error {
 	tokenAddress := common.HexToAddress(ctx.String("token"))
+	// Get an intance of the contract to interact with it
 	instance, err := token.NewToken(tokenAddress, utils.Client(ctx.String("ethclient")))
 	if err != nil {
 		utils.Fatalf(err.Error())
 	}
 
 	walletAddress := common.HexToAddress(ctx.String("wallet"))
+	// Send a query to the chain using the contract instance
 	minimalRepBalance, err := instance.BalanceOf(&bind.CallOpts{}, walletAddress)
 	if err != nil {
 		utils.Fatalf(err.Error())
@@ -59,6 +61,8 @@ func tokenBalance(ctx *cli.Context) error {
 
 	fbal := new(big.Float)
 	fbal.SetString(minimalRepBalance.String())
+	// Divide the minimal representation of the amount by the number of decimals to obtain a classic representation,
+	// i.e. 12550120 -> 12.550120
 	balance := new(big.Float).Quo(fbal, big.NewFloat(math.Pow10(int(utils.TokenDecimals(instance)))))
 
 	fmt.Printf("Wallet address: %v\nCurrent balance: %v%v\n", ctx.String("wallet"), balance, utils.TokenSymbol(instance))
