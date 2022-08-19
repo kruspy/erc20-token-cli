@@ -24,6 +24,7 @@ func init() {
 		createCommand,
 		infoCommand,
 		balanceCommand,
+		transferCommand,
 	}
 }
 
